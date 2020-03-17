@@ -151,10 +151,13 @@ const get_data_from_network = () => {
   const sync_local_with_server=()=>{
     console.log("sync triggered")
     let sync_status = localStorage.getItem("sync_status");
-    let sync_queue = localStorage.getItem("sync_queue");
-   if(sync_status==="sync" && sync_queue ){
+   if(sync_status==="sync"){
       console.log(sync_status)
       let sync_queue = localStorage.getItem("sync_queue");
+      if(!sync_queue){
+        get_data_from_network()
+        return
+      }
       fetch("https://notesbackend.qwertyforce.ru:8080/sync", {
       method: "POST",
       headers: {
@@ -200,6 +203,7 @@ const get_data_from_network = () => {
 
   React.useEffect(() => {
     window.addEventListener('online',  sync_local_with_server);
+    window.addEventListener('visibilitychange', ()=>{if(!document.hidden)sync_local_with_server()});
     let sync_status_local = localStorage.getItem("sync_status");
     let theme_color_local = localStorage.getItem("theme_color");
     let search = window.location.search;
