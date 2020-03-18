@@ -25,8 +25,12 @@ const useStyles = makeStyles(theme => ({
 
 
 function convert_timestamp_to_date(timestamp) {
-  var d = new Date(timestamp);
-  return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}` 
+  let d = new Date(timestamp);
+  let minutes= d.getMinutes()
+  if(minutes<10){
+   minutes="0"+minutes
+  }
+  return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${d.getHours()}:${minutes}` 
 }
 
 const Note = React.memo(props => {
