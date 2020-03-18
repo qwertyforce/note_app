@@ -10,9 +10,24 @@ const useStyles = makeStyles(theme => ({
   },
     note:{
    padding:'10px!important'
-  }    
+  },
+  header:{
+    "font-weight": 600
+  },
+  body:{
+    display:"inline"
+  },
+  date :{
+    display:"inline",
+    float: "right"
+  }
 }));
 
+
+function convert_timestamp_to_date(timestamp) {
+  var d = new Date(timestamp);
+  return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}` 
+}
 
 const Note = React.memo(props => {
 const classes = useStyles();
@@ -20,11 +35,18 @@ return (
     <Card className={classes.note_root} variant="outlined" square data-note-id={props.note_id} onClick={()=>props.handleClick(props.note_id)}>
     <CardActionArea >
       <CardContent className={classes.note}>
-        <Typography variant="body2" component="p">
+        <Typography variant="body2" className={classes.header}>
           {props.header}
-          <br />
+          </Typography>
+          <div>
+          <Typography variant="body2"  className={classes.body}>
           {props.body}
         </Typography>
+        <Typography variant="caption" className={classes.date}>
+          {convert_timestamp_to_date(props.last_modified)}
+        </Typography>
+          </div>
+          
       </CardContent>
       </CardActionArea>
     </Card>

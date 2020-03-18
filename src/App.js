@@ -13,7 +13,7 @@ import AddNoteFab from "./AddNoteFab";
 import SnackBarAlert from "./SnackBarAlert";
  
 
-
+ 
 const App = React.memo(props => {
   const [open_note_add, set_open_note_add] = React.useState(false);
   const [open_note_edit, set_open_note_edit] = React.useState(false);
@@ -41,6 +41,14 @@ const App = React.memo(props => {
     }
   };
 
+  const sort_notes_by_last_modified = (notes) => {
+    let new_notes = notes;
+    new_notes.sort(function(a, b) {
+      return b.last_modified - a.last_modified;
+    });
+    return new_notes
+  };
+
 const get_data_from_network = () => {
   fetch("https://notesbackend.qwertyforce.ru:8080/get_notes", { credentials: "include" })
     .then(res => res.json())
@@ -56,6 +64,7 @@ const get_data_from_network = () => {
       } else if (notes.length >= 0) {
         setSnackBarAlertData({severity:"success",text:"Synced  notes with server 👌"})
         setOpenSnackBarAlert(true)
+        notes=sort_notes_by_last_modified(notes)
         set_all_notes(notes);
         set_auth_status(true);
         set_loading_notes_from_internet(false)
@@ -315,6 +324,7 @@ const get_data_from_network = () => {
     if (sync_status === "sync") {
       update_note_to_server(note);
     }
+    updated=sort_notes_by_last_modified(updated)
     set_all_notes(updated);
   };
   const handleClickAddNote = (header, body) => {
@@ -331,6 +341,7 @@ const get_data_from_network = () => {
       set_all_notes([note]);
     } else {
       var updated = [...all_notes, note];
+      updated=sort_notes_by_last_modified(updated)
       set_all_notes(updated);
     }
     if (sync_status === "sync") {
