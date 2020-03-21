@@ -270,7 +270,6 @@ const get_data_from_network = () => {
   React.useEffect(() => {
     if (all_notes) {
       let notes = JSON.stringify(all_notes);
-      console.log(notes);
       localStorage.setItem("notes", notes);
     }
   }, [all_notes]);
@@ -305,7 +304,7 @@ const get_data_from_network = () => {
     }
   };
 
-  const handleClickSaveChanges = (header, body) => {
+  const handleClickSaveChanges = (header, body,color) => {
     if (
       (header === undefined && body === undefined) ||
       (header === "" && body === "")
@@ -314,7 +313,7 @@ const get_data_from_network = () => {
     }
     handleCloseNoteEdit();
     var id = clicked_note.id;
-    var note = { header: header.toString(), body: body.toString(), id: id,last_modified:Date.now()};
+    var note = { header: header.toString(), body: body.toString(), id: id,last_modified:Date.now(),color:color};
     var updated = all_notes.map(el => {
       if (el.id === id) {
         el = note;
@@ -327,7 +326,7 @@ const get_data_from_network = () => {
     updated=sort_notes_by_last_modified(updated)
     set_all_notes(updated);
   };
-  const handleClickAddNote = (header, body) => {
+  const handleClickAddNote = (header, body,color) => {
     if (
       (header === undefined && body === undefined) ||
       (header === "" && body === "")
@@ -336,7 +335,7 @@ const get_data_from_network = () => {
     }
     handleCloseNoteAdd();
     var time=Date.now()
-    var note = { header: header.toString(), body: body.toString(), id:time,last_modified:time};
+    var note = { header: header.toString(), body: body.toString(), id:time,last_modified:time,color:color};
     if (all_notes === false) {
       set_all_notes([note]);
     } else {
@@ -381,14 +380,9 @@ const get_data_from_network = () => {
     }
   };
   
-
   const handleCloseSnackBarAlert = () => {
     setOpenSnackBarAlert(false);
   };
-
-  
-
-  
 
   const handleChangeTheme = () => {
     theme.palette.type = theme.palette.type === "light" ? "dark" : "light";
@@ -421,6 +415,7 @@ const get_data_from_network = () => {
           open={open_note_edit}
           header={clicked_note.header}
           body={clicked_note.body}
+          color={clicked_note.color}
           handleClickDeleteNote={handleClickDeleteNote}
           handleClickSaveChanges={handleClickSaveChanges}
         />

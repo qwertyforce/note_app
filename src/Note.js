@@ -35,8 +35,9 @@ function convert_timestamp_to_date(timestamp) {
 
 const Note = React.memo(props => {
 const classes = useStyles();
+const color={backgroundColor:(props.color!=="default" && props.color!==undefined)?props.color:false }
 return (
-    <Card className={classes.note_root} variant="outlined" square data-note-id={props.note_id} onClick={()=>props.handleClick(props.note_id)}>
+    <Card className={classes.note_root} variant="outlined" square data-note-id={props.note_id} onClick={()=>props.handleClick(props.note_id)} style={color} >
     <CardActionArea >
       <CardContent className={classes.note}>
         <Typography variant="body2" className={classes.header}>
@@ -56,7 +57,7 @@ return (
     </Card>
   );
 },(prevProps, nextProps) =>{
-  return ((prevProps.header===nextProps.header)&&(prevProps.body===nextProps.body))
+  return ((prevProps.header===nextProps.header)&&(prevProps.body===nextProps.body)&&(prevProps.color===nextProps.color))
 })
 
 export default Note;

@@ -3,8 +3,7 @@ import Box from "@material-ui/core/Box";
 import Note from "./Note";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const NotesGrid = React.memo(
-  props => {
+const NotesGrid = React.memo(props => {
     var notes = props.notes;
     if (props.loading_notes_from_internet === true) {
       return (
@@ -16,8 +15,7 @@ const NotesGrid = React.memo(
     if (notes === false || notes.length === 0) {
       return null;
     }
-    notes = notes.filter(
-      el =>
+    notes = notes.filter(el =>
         el.header.indexOf(props.search_query) > -1 ||
         el.body.indexOf(props.search_query) > -1
     );
@@ -29,6 +27,7 @@ const NotesGrid = React.memo(
         key={el.id}
         last_modified={el.last_modified}
         note_id={el.id}
+        color={el.color}
         handleClick={props.handleClick}
       />
     ));
@@ -46,7 +45,8 @@ const NotesGrid = React.memo(
           prevProps.notes[i].header !== nextProps.notes[i].header ||
           prevProps.notes[i].body !== nextProps.notes[i].body ||
           prevProps.notes[i].id !== nextProps.notes[i].id ||
-          prevProps.notes[i].last_modified !== nextProps.notes[i].last_modified
+          prevProps.notes[i].last_modified !== nextProps.notes[i].last_modified ||
+          prevProps.notes[i].color !== nextProps.notes[i].color
         ) {
           return false;
         }
