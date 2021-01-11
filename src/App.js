@@ -11,7 +11,7 @@ import SnackBarNoteDeleted from "./SnackBarNoteDeleted";
 import AppBar from "./AppBar";
 import AddNoteFab from "./AddNoteFab";
 import SnackBarAlert from "./SnackBarAlert";
- 
+import config from "./config"
 
  
 const App = React.memo(props => {
@@ -50,7 +50,7 @@ const App = React.memo(props => {
   };
 
 const get_data_from_network = () => {
-  fetch("https://notesbackend.qwertyforce.ru:8080/get_notes", { credentials: "include" })
+  fetch(`${config.domain}/get_notes`, { credentials: "include" })
     .then(res => res.json())
     .then(notes => {
       if (notes.error) {
@@ -79,7 +79,7 @@ const get_data_from_network = () => {
 };
 
   const send_note_to_server = note => {
-    fetch("https://notesbackend.qwertyforce.ru:8080/add_note", {
+    fetch(`${config.domain}/add_note`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8"
@@ -105,7 +105,7 @@ const get_data_from_network = () => {
   };
 
   const update_note_to_server = note => {
-    fetch("https://notesbackend.qwertyforce.ru:8080/update_note", {
+    fetch(`${config.domain}/update_note`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8"
@@ -130,7 +130,7 @@ const get_data_from_network = () => {
     });
   };
   const delete_note_to_server = note => {
-    fetch("https://notesbackend.qwertyforce.ru:8080/delete_note", {
+    fetch(`${config.domain}/delete_note`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8"
@@ -167,7 +167,7 @@ const get_data_from_network = () => {
         get_data_from_network()
         return
       }
-      fetch("https://notesbackend.qwertyforce.ru:8080/sync", {
+      fetch(`${config.domain}/sync`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8"
@@ -376,7 +376,7 @@ const get_data_from_network = () => {
     if (message === "Login") {
       setOpenAuthModal(true);
     } else {
-      window.location.replace("https://notesbackend.qwertyforce.ru:8080/logout");
+      window.location.replace(`${config.domain}/logout`);
     }
   };
   

@@ -10,7 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-
+import config from './config'
 const useStyles = makeStyles(theme => ({
   dialog_title: {
     padding: 8,
@@ -48,7 +48,7 @@ function AuthModal(props) {
               variant="contained"
               color="secondary"
               onClick={props.handleSync}
-              href="https://notesbackend.qwertyforce.ru:8080/auth/google"
+              href={`${config.domain}/auth/google`}
               startIcon={
                 <SvgIcon>
                   <FontAwesomeIcon icon={faGoogle} size="lg" />
@@ -62,7 +62,7 @@ function AuthModal(props) {
             <Button
               variant="contained"
               onClick={props.handleSync}
-              href="https://notesbackend.qwertyforce.ru:8080/auth/github"
+              href={`${config.domain}/auth/github`}
               startIcon={
                 <SvgIcon>
                   <FontAwesomeIcon icon={faGithub} size="lg" />
